@@ -68,3 +68,5 @@ def autoNorm(dataSet):
     return normData,range,minValues
 
 
+def test():
+    return
