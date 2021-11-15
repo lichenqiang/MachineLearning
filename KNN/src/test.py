@@ -8,13 +8,16 @@ import knn
 # 定义训练样本集，和标签，
 
 #读取数据
-dateData, type = knn.parseFile("F:\\baincheng\\python\\MachineLearning\\KNN\data\\dateData.txt")
+dateData, type = knn.readFile("F:\\baincheng\\python\\MachineLearning\\KNN\data\\dateData.txt")
 #归一化数据
-normedData,range,minvalue = knn.autoNorm(dateData)
+normedData,ranges,minvalue = knn.autoNorm(dateData)
 #分类
 type1 = knn.classfy([568,7,1],normedData,type,8)
-print(type1)
+#print(type1)
 
+#测试
+a = knn.testClassify("F:\\baincheng\\python\\MachineLearning\\KNN\data\\dateData.txt")
+print(a)
 
 
 #散点图显示数据
