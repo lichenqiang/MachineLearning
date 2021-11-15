@@ -35,7 +35,7 @@ def classfy(inX, dataset, labels, k):
 
 
 # 解析数据
-def parseFile(filePath):
+def readFile(filePath):
     # 打开文件
     fr = open(filePath)
     # 多行读取文件
@@ -53,7 +53,8 @@ def parseFile(filePath):
         index = index + 1
     return returnMat, classLabelVector
 
-#数据归一化
+
+# 数据归一化
 def autoNorm(dataSet):
     minValues = dataSet.min(0)
     maxValues = dataSet.max(0)
@@ -65,8 +66,21 @@ def autoNorm(dataSet):
     # 行向重复m次，列向重复1次，
     normData = dataSet - np.tile(minValues, (m, 1))
     normData = normData / np.tile(range, (m, 1))
-    return normData,range,minValues
+    return normData, range, minValues
 
 
-def test():
-    return
+def testClassify(testDataPath):
+    hoRatio = 0.2
+    dateData, dateLabels = readFile(testDataPath)
+    normData, minValues, ranges = autoNorm(dateData)
+    m = normData.shape[0]
+    numTestVacs = int(m * hoRatio)
+    errorCount = 0.0
+    for i in range(numTestVacs):
+        # 整个数据的前百分之十用来测试，后百分之九十用来训练
+        classfierResult = classfy(normData[i, :], normData[numTestVacs:m, :], dateLabels[numTestVacs:m], 3)
+        print("the classifier come back with: %d, the real answer is :%d" % (classfierResult, dateLabels[i]))
+        if classfierResult != dateLabels[i]:
+            errorCount += 1
+    return errorCount / float(numTestVacs)
+    # print(" the total error rate is :%f" % (errorCount / float(numTestVacs)))
