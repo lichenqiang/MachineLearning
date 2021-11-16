@@ -2,6 +2,7 @@ import operator
 
 import numpy as np
 
+#约会对象预测
 
 # 创建训练数据
 def createDataSet():
